@@ -55,6 +55,13 @@ struct CircleView: View {
                           text: $providedRadius,
                           prompt: Text("Numeric value greater than 0"))
                 
+                // Termary colditional operator
+                // It' essentially a one line if-else statemnt
+                // CONDITION ? EXPRESSION-1 : EXPRESSION-2
+                // CONDITION is: radius == nil
+                // EXPRESSION-1 happens when TRUE: Colour.red
+                // EXPRESSION-2 happens when FALSE: Colour.primary
+                    .foregroundColor(radius == nil ? Color.blue :  Color.primary)
                 
                 
                 SectionLabelView(text: "Area", variable: "")
