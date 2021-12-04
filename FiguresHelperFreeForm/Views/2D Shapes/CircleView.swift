@@ -10,10 +10,33 @@ import SwiftUI
 struct CircleView: View {
     
     // MARK: Stored properties
-    @State var radius = 10.0
+    @State var providedRadius = ""
     
     // MARK: Computed properties
-    var area: Double {
+    
+    var radius: Double? {
+        
+        guard let radius = Double(providedRadius),
+              radius > 0
+        else {
+            return nil
+            
+        }
+        return radius
+    }
+    // attempts to calculate the area - if it cannot return nil.
+    var area: Double?{
+        
+        // are imputs valid
+        // the black radius is a local constant it only exists after the gaurded statement
+        guard let radius = radius
+        else {
+            // imputs not valid, so we cannnot compute the area
+            return nil
+        }
+        
+        
+        
         return Double.pi * radius * radius
     }
     
@@ -26,23 +49,13 @@ struct CircleView: View {
                             horizontalPadding: 50)
                 
                 SectionLabelView(text: "Radius", variable: "r")
-
-                // Input: Radius
-                Slider(value: $radius,
-                       in: 0.0...100.0,
-                       step: 0.1,
-                       label: {
-                    Text("Radius")
-                },
-                       minimumValueLabel: {
-                    Text("0")
-                },
-                       maximumValueLabel: {
-                    Text("100")
-                })
                 
-                // Output: Radius
-                SliderValueView(value: radius)
+                // Input: Radius
+                TextField("Radius",
+                          text: $providedRadius,
+                          prompt: Text("Numeric value greater than 0"))
+                
+                
                 
                 SectionLabelView(text: "Area", variable: "")
                 

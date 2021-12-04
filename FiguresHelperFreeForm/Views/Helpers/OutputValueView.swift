@@ -10,16 +10,32 @@ import SwiftUI
 struct OutputValueView: View {
     
     // MARK: Stored properties
-    let value: Double
+    let value: Double?
     let suffix: String
     
     // MARK: Computed properties
-    var formattedValue: String {
-        return String(format: "%.1f", value)
+    
+    
+    // Whaen there is a value to show, present it in a nicly formatted manner
+    // Where nere is no vale to show (nil) we will show an apprprtiate error message
+    var output: String {
+        
+        if let value = value {
+            // create a local sring that is the formatted value
+            let formattedValue = String(format: "%.1f", value)
+            
+            return "\(formattedValue) \(suffix)"
+            
+        } else {
+            
+            return "Cannot currently be computed"
+            
+        }
     }
     
+    
     var body: some View {
-        Text("\(formattedValue) \(suffix)")
+        Text(output)
             .font(.title3)
             .bold()
     }
@@ -27,7 +43,11 @@ struct OutputValueView: View {
 
 struct OutputValueView_Previews: PreviewProvider {
     static var previews: some View {
+        
         OutputValueView(value: 12131.121,
+                        suffix: "square units")
+        
+        OutputValueView(value: nil,
                         suffix: "square units")
     }
 }
